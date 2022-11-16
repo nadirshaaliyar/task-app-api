@@ -59,7 +59,6 @@ app.patch('/users/:id', async (req,res) =>{
         if(!user){
             return res.status(404).send()
         }
-
         res.send(user)
     }catch(e){
         res.status(400).send(e)
@@ -78,6 +77,7 @@ app.post('/tasks', async (req,res)=>{
 
 
 app.get('/tasks',async (req,res)=>{
+
     try{
         const tasks= await Task.find({})
         res.send(tasks)
@@ -97,6 +97,27 @@ app.get('/tasks/:id', async (req, res) => {
         res.send(task)
     }catch(e){
         res.status(500).send()
+    }
+})
+
+app.patch('/tasks/:id', async (req,res)=>{
+
+    const updates =Object.keys(req.body)
+    const allowedupdates =['description','completed']
+    const isValidOperation=updates.every((update)=> allowedupdates.includes(update))
+
+    if(!isValidOperation){
+        return res.status(400).send({error: 'Invalid Updates!'})
+    }
+
+    try{
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body,{ new:true, runValidators:true })
+        if(!task){
+            return res.status(404).send()
+        }
+        res.send(task)
+    }catch(e){
+        res.status(400).send(e)
     }
 })
 
