@@ -1,39 +1,18 @@
-const nodemailer= require('nodemailer')
+var SibApiV3Sdk = require('sib-api-v3-sdk');
+SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
 
 
-
-
-async function main() {
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-    // let testAccount = await nodemailer.createTestAccount();
-  
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: 'austen.klein@ethereal.email', // generated ethereal user
-        pass: 's6eA4wEJCtJaaabSsK', // generated ethereal password
-      },
-    });
-  
-    // send mail with defined transport object
-    let info = await transporter.sendMail({
-      from: '"Fred Foo 👻" <austen.klein@ethereal.email>', // sender address
-      to: "austen.klein@ethereal.email", // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
-      html: "<b>Hello world?</b>", // html body
-    });
-  
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-  
-    // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail(
+  {
+    'subject':'Hello from the Node SDK!',
+    'sender' : {'email':'nadirshaaliyar737@gmail.com', 'name':'Sendinblue'},
+    'replyTo' : {'email':'api@sendinblue.com', 'name':'Sendinblue'},
+    'to' : [{'name': 'John Doe', 'email':'nadirshaaliyar747@gmail.com'}],
+    'htmlContent' : '<html><body><h1>This is a transactional email {{params.bodyMessage}}</h1></body></html>',
+    'params' : {'bodyMessage':'Made just for you!'}
   }
-  
-  main().catch(console.error);
+).then(function(data) {
+  console.log(data);
+}, function(error) {
+  console.error(error);
+});
