@@ -1,7 +1,7 @@
 var SibApiV3Sdk = require('sib-api-v3-sdk');
 var defaultClient = SibApiV3Sdk.ApiClient.instance;
 var apiKey = defaultClient.authentications['api-key']
-apiKey.apiKey = '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';
+apiKey.apiKey = process.env.SENDBLUE_API_KEY
 
 
 async function sendWelcomeEmail(email,_name){
