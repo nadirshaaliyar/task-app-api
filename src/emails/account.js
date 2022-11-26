@@ -1,18 +1,52 @@
 var SibApiV3Sdk = require('sib-api-v3-sdk');
-SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+var defaultClient = SibApiV3Sdk.ApiClient.instance;
+var apiKey = defaultClient.authentications['api-key']
+apiKey.apiKey = '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';
 
 
-new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail(
-  {
-    'subject':'Hello from the Node SDK!',
+async function sendWelcomeEmail(email,_name){
+
+  let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+  var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail()
+
+  sendSmtpEmail = {
+    'subject':'Thanks for joining in!',
     'sender' : {'email':'nadirshaaliyar737@gmail.com', 'name':'Sendinblue'},
-    'replyTo' : {'email':'api@sendinblue.com', 'name':'Sendinblue'},
-    'to' : [{'name': 'John Doe', 'email':'nadirshaaliyar747@gmail.com'}],
-    'htmlContent' : '<html><body><h1>This is a transactional email {{params.bodyMessage}}</h1></body></html>',
-    'params' : {'bodyMessage':'Made just for you!'}
+    'to' : [{'name': (_name), 'email':email}],
+    'htmlContent' : '<html><body><h1>Welcome to the app {{params.bodyMessage}}</h1></body></html>',
+    'params' : {'bodyMessage':_name}
+
   }
-).then(function(data) {
-  console.log(data);
-}, function(error) {
-  console.error(error);
-});
+  apiInstance.sendTransacEmail(sendSmtpEmail)
+  // .then(function(data) {
+  //   console.log(data);
+  // }, function(error) {
+  //   console.error(error);
+  // });
+
+ }
+
+//  sendWelcomeEmail('nadirshaaliyar747@gmail.com','nadir')
+
+async function sendCancelationEmail(email,_name){
+
+  let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+  var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail()
+
+  sendSmtpEmail = {
+    'subject':'Sorry to see you go!',
+    'sender' : {'email':'nadirshaaliyar737@gmail.com', 'name':'Sendinblue'},
+    'to' : [{'name': (_name), 'email':email}],
+    'htmlContent' : '<html><body><h1>Goodbye,{{params.bodyMessage}}.I hope to see you back sometime soon!</h1></body></html>',
+    'params' : {'bodyMessage':_name}
+
+  }
+  apiInstance.sendTransacEmail(sendSmtpEmail)
+}
+
+module.exports = {
+  sendWelcomeEmail,
+  sendCancelationEmail
+}
