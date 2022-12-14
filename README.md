@@ -1,4 +1,7 @@
-# Task-app
+<p align="center">
+    <img src="https://www.flaticon.com/free-icon/new-task_3161597?term=task%20app&page=1&position=5&page=1&position=5&related_id=3161597&origin=search" height="75">
+    <h1 align="center"><b>Task App</b></h1>
+</p>
 
 >A simple task-app-api created in nodejs and hosted in heroku.The api can be tested using postman.
 
