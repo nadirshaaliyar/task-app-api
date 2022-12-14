@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://www.flaticon.com/free-icon/new-task_3161597?term=task%20app&page=1&position=5&page=1&position=5&related_id=3161597&origin=search" height="75">
+    <img src="./src/db/new-task.png" height="75">
     <h1 align="center"><b>Task App</b></h1>
 </p>
 
